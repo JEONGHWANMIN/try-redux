@@ -1,70 +1,57 @@
-# Getting Started with Create React App
+# Try Redux
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Redux : 전역으로 상태관리를 하기 위한 라이브러리
 
-## Available Scripts
+- dispatch로 action을 reducer로 보내주면 reducer는 요청이 오는 action에 따라서
+  상태값을 변경시켜 준다.
+- 직접 값을 바꾸는게 아니라 무조건 dispatch action 값에 맞게 값이 수정되어야 한다.
 
-In the project directory, you can run:
+#### - reducer( state , action )
 
-### `npm start`
+```javascript
+export default function countReducer(state = initialState, action) {
+  switch (action.type) {
+    case 'INCRESE':
+      return {
+        ...state,
+        count: state.count + 1,
+      };
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+reducer는 state , action 두 가지 파라미터를 받는다.
+action은 dispatch로 보낼때 type값을 넣어서 보내준다.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+#### - dispatch( { type : action.type , payload : data } )
 
-### `npm test`
+dispatch는 리덕스로 상태값을 변경시킬때 쓰는 훅이다 .
+type에는 특정 액션을 스트링 형식으로 보내주고, data같은 경우에는 payload에 담아서 보내준다.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+####reducer를 rootReducer로 묶어준다.
 
-### `npm run build`
+```javascript
+import countReducer from './CounterReducer';
+export const rootReducer = combineReducers({
+  countReducer: countReducer,
+});
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Redux를 사용하려면 Provider 로 컴포넌트를 감싸줘야 한다.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+provider store={store}를 넣어줘야 하는데 store는 생성해 줘야 한다.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```javascript
+const store = createStore(
+  rootReducer,
+);
+return (
+  <Provider store={store}>
+    <App />
+  </Provider>;
+)
+```
 
-### `npm run eject`
+#### Redux 상태값을 이용해서 사용할때는 useSelector( ) 사용한다.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```javascript
+const count = useSelector((state) => state.countReducer.count);
+```

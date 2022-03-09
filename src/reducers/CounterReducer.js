@@ -6,7 +6,7 @@ export const initialState = {
   ],
 };
 
-export default function count(state = initialState, action) {
+export default function countReducer(state = initialState, action) {
   switch (action.type) {
     case 'INCRESE':
       console.log('INCRESE');
