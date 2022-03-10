@@ -26,7 +26,7 @@ action은 dispatch로 보낼때 type값을 넣어서 보내준다.
 dispatch는 리덕스로 상태값을 변경시킬때 쓰는 훅이다 .
 type에는 특정 액션을 스트링 형식으로 보내주고, data같은 경우에는 payload에 담아서 보내준다.
 
-####reducer를 rootReducer로 묶어준다.
+#### reducer를 rootReducer로 묶어준다.
 
 ```javascript
 import countReducer from './CounterReducer';
