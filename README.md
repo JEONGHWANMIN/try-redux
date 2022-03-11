@@ -55,3 +55,9 @@ return (
 ```javascript
 const count = useSelector((state) => state.countReducer.count);
 ```
+
+참고
+https://ridicorp.com/story/how-to-use-redux-in-ridi/
+
+위 사이트를 보면 useSelector를 바로 사용하는게 아니라 따로 cutomHook을 만들어서 값을 가져오는데 이부분이 더 유지보수 측면에서 용이하다고 한다.
+나도 다음에 사용할때는 직접 사용하기보단 customHook을 만들어서 사용해 봐야겠다.
